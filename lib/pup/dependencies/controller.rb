@@ -1,6 +1,17 @@
 require "erubis"
+
 module Pup
   class Controller
+    attr_reader :request
+
+    def initialize(env)
+      @request ||= Rack::Request.new(env)
+    end
+
+    def params
+      request.params
+    end
+
     def render(view_name, locals = {})
       template = get_template(view_name)
       Erubis::Eruby.new(template).result(locals)

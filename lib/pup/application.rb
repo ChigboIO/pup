@@ -6,12 +6,12 @@ require "pup/utilities/object"
 module Pup
   class Application
     attr_reader :request, :verb, :path
-    def call(_env)
+    def call(env)
       # [200, {}, ["pup: A Ruby Framework for web masters"]]
       # @request = Rack::Request.new(env)
       # @verb, @path = request.request_method, request.path_info
       controller, action = controller_and_action("my_pages#index")
-      response = controller.new.send(action)
+      response = controller.new(env).send(action)
       [200, { "Content-Type" => "text/html" }, [response]]
     end
 
