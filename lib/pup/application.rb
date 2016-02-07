@@ -10,9 +10,14 @@ module Pup
       # [200, {}, ["pup: A Ruby Framework for web masters"]]
       # @request = Rack::Request.new(env)
       # @verb, @path = request.request_method, request.path_info
-      controller, action = controller_and_action("my_pages#index")
-      response = controller.new(env).send(action)
-      [200, { "Content-Type" => "text/html" }, [response]]
+      controller_name, action = controller_and_action("my_pages#index")
+      controller = controller_name.new(env)
+      controller.send(action)
+
+      unless controller.get_response
+        controller.render(action)
+      end
+      controller.get_response
     end
 
     def controller_and_action(to)
