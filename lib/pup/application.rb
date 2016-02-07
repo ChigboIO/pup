@@ -1,6 +1,7 @@
 require "rack"
-require "pup/dependencies/string"
-require "pup/dependencies/object"
+require "pup/dependencies/controller"
+require "pup/utilities/string"
+require "pup/utilities/object"
 
 module Pup
   class Application
@@ -9,7 +10,7 @@ module Pup
       # [200, {}, ["pup: A Ruby Framework for web masters"]]
       # @request = Rack::Request.new(env)
       # @verb, @path = request.request_method, request.path_info
-      controller, action = controller_and_action("pages#index")
+      controller, action = controller_and_action("my_pages#index")
       response = controller.new.send(action)
       [200, { "Content-Type" => "text/html" }, [response]]
     end
