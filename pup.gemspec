@@ -36,4 +36,5 @@ web applications with ease"
   spec.add_development_dependency "rspec"
 
   spec.add_runtime_dependency "rack"
+  spec.add_runtime_dependency "erubis"
 end
