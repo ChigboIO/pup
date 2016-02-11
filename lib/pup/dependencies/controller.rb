@@ -4,8 +4,8 @@ module Pup
   class Controller
     attr_reader :request, :response
 
-    def initialize(env)
-      @request ||= Rack::Request.new(env)
+    def initialize(request)
+      @request ||= request
     end
 
     def params
@@ -39,7 +39,7 @@ module Pup
     def build_view_params(locals)
       vars = {}
       instance_variables.each do |var|
-        key = var.to_s.delete("@").to_sym
+        key = var # .to_s.delete("@").to_sym
         vars[key] = instance_variable_get(var)
       end
       vars.merge(locals)
