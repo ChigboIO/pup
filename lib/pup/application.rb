@@ -1,8 +1,6 @@
 require "rack"
-require "pup/dependencies/controller"
-require "pup/utilities/string"
-require "pup/utilities/object"
 require "pup/routing/router"
+require "pup/controlling/controller"
 require "pup/dependencies/request_handler"
 
 module Pup
