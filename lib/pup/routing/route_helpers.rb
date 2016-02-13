@@ -7,6 +7,7 @@ module Pup
     def resources(resource, options = {}, &block)
       actions = get_required_actions(options)
 
+      # rubocop:disable Metrics/LineLength
       get("/#{resource}", to: "#{resource}#index") if actions.include?(:index)
       get("/#{resource}/new", to: "#{resource}#new") if actions.include?(:new)
       post("/#{resource}", to: "#{resource}#create") if actions.include?(:create)
@@ -15,6 +16,7 @@ module Pup
       put("/#{resource}/:id", to: "#{resource}#update") if actions.include?(:update)
       patch("/#{resource}/:id", to: "#{resource}#update") if actions.include?(:update)
       delete("/#{resource}/:id", to: "#{resource}#destroy") if actions.include?(:destroy)
+      # rubocop:enable Metrics/LineLength
 
       instance_eval(&block) if block_given?
     end
