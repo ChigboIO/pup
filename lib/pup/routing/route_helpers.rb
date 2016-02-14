@@ -4,7 +4,7 @@ module Pup
       get("/", to: target)
     end
 
-    def resources(resource, options = {}, &block)
+    def resources(resource, options = {})
       actions = get_required_actions(options)
 
       # rubocop:disable Metrics/LineLength
@@ -17,8 +17,6 @@ module Pup
       patch("/#{resource}/:id", to: "#{resource}#update") if actions.include?(:update)
       delete("/#{resource}/:id", to: "#{resource}#destroy") if actions.include?(:destroy)
       # rubocop:enable Metrics/LineLength
-
-      instance_eval(&block) if block_given?
     end
 
     def get_required_actions(options)
@@ -27,5 +25,7 @@ module Pup
       actions &= options[:only] if options.key?(:only)
       actions
     end
+
+    private :get_required_actions
   end
 end

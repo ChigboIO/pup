@@ -6,7 +6,8 @@ module Pup
     class Router
       include RouteHelpers
       attr_accessor :routes
-      ALLOWED_VERBS = %w(get post put delete patch).freeze
+
+      ALLOWED_VERBS = %w(get post put patch delete).freeze
 
       def initialize
         @routes = {}
@@ -17,18 +18,29 @@ module Pup
         instance_eval(&block)
       end
 
+      def has_routes?
+        true unless routes.empty?
+      end
+
+      def get_match(verb, path)
+        verb = verb.downcase.to_sym
+        routes[verb].detect do |route|
+          route.check_path(path)
+        end
+      end
+
       def generate_verb_methods
         self.class.instance_eval do
           ALLOWED_VERBS.each do |verb|
             define_method(verb) do |path, to:|
-              process_and_save_route(verb, path, to)
+              process_and_store_route(verb, path, to)
             end
           end
         end
       end
 
-      def process_and_save_route(verb, path, to)
-        regex_match, url_placeholders = extract_url_placeholders(path)
+      def process_and_store_route(verb, path, to)
+        regex_match, url_placeholders = extract_regex_and_placeholders(path)
         path_regex = convert_path_to_regex(regex_match)
         route_object = Pup::Routing::Route.new(path_regex, to, url_placeholders)
 
@@ -36,8 +48,9 @@ module Pup
         routes[verb.downcase.to_sym] << route_object
       end
 
-      def extract_url_placeholders(path)
-        path = "/" + path if path[0] != "/"
+      def extract_regex_and_placeholders(path)
+        path.sanitize_path!
+
         regex_match = []
         url_placeholders = {}
         path.split("/").each_with_index do |element, index|
@@ -55,6 +68,9 @@ module Pup
         regex_string = "^" + regex_match.join("/") + "/*$"
         Regexp.new(regex_string)
       end
+
+      private :generate_verb_methods, :process_and_store_route,
+              :extract_regex_and_placeholders, :convert_path_to_regex
     end
   end
 end
