@@ -1,9 +1,11 @@
 require "sqlite3"
-require "pup/modeling/columns_builder"
+require "pup/model/columns_builder"
+require "pup/model/orm_methods"
 
 module Pup
   class Model
-    extend ColumnsBuilder
+    extend Pup::ColumnsBuilder
+    extend Pup::OrmMethods
 
     DB ||= SQLite3::Database.new(File.join("db", "data.sqlite"))
 
@@ -29,17 +31,21 @@ module Pup
     end
 
     def table_fields
-      self.class.columns_array.no_id.with_value(self).join(", ")
+      columns_except_id.join(", ")
+    end
+
+    def columns_except_id
+      self.class.columns_array.without_id.with_value(self)
     end
 
     def values_placeholders
-      count = self.class.columns_array.no_id.with_value(self).count
+      count = columns_except_id.count
       (["?"] * count).join(", ")
     end
 
     def table_values
       values = []
-      self.class.columns_array.no_id.with_value(self).each do |field|
+      columns_except_id.each do |field|
         values << send(field)
       end
       values
@@ -47,7 +53,7 @@ module Pup
 
     def update_field_set
       values = []
-      self.class.columns_array.no_id.with_value(self).each do |field|
+      columns_except_id.each do |field|
         values << "#{field} = ? "
       end
       values.join(", ")
@@ -76,43 +82,9 @@ module Pup
       def columns_array
         @columns_array ||= fields.keys
       end
-
-      def all
-        fields = columns_array.join(", ")
-        data = DB.execute("SELECT id, #{fields} FROM #{@table_name}")
-        data.map! do |row|
-          row_to_model(row)
-        end
-
-        data
-      end
-
-      def row_to_model(row)
-        model = new
-
-        columns_array.each_with_index do |field, index|
-          model.send("#{field}=", row[index + 1]) if row
-        end
-
-        model
-      end
-
-      def find(id)
-        fields = columns_array.join(", ")
-        row = DB.execute(
-          "SELECT id, #{fields} FROM #{table_name} WHERE id = ?",
-          id
-        ).first
-        row_to_model(row)
-      end
-
-      def destroy(id)
-        DB.execute("DELETE FROM #{table_name} WHERE id= ?", id)
-      end
-
-      def destroy_all
-        DB.execute("DELETE FROM #{table_name}")
-      end
     end
+
+    private :table_fields, :columns_except_id, :values_placeholders,
+            :table_values, :update_field_set
   end
 end

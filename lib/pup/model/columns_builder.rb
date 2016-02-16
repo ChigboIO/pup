@@ -1,6 +1,7 @@
-
 module Pup
   module ColumnsBuilder
+    private
+
     def fields_builder(fields)
       columns_definition = ""
       fields.each do |field, constraints|

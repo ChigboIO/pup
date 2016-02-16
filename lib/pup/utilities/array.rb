@@ -3,7 +3,7 @@ class Array
     reject { |field| base.send(field).nil? }
   end
 
-  def no_id
+  def without_id
     reject { |key| key == :id }
   end
 end

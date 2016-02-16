@@ -20,9 +20,10 @@ module Pup
     end
 
     def collage_parameters
-      request.params.merge(route.get_url_parameters(request.path_info))
+      route_url_params = route.get_url_parameters(request.path_info)
+      request.params.merge(route_url_params)
     rescue RuntimeError
-      {}.merge(route.get_url_parameters(request.path_info))
+      {}.merge(route_url_params)
     end
 
     def controller_response(controller, action)
@@ -34,8 +35,6 @@ module Pup
       controller.get_response
     end
 
-    def error_response(error)
-      Rack::Response.new("Error. #{error}.", 500, {})
-    end
+    private :process_request, :collage_parameters, :controller_response
   end
 end
