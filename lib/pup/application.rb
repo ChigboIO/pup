@@ -1,5 +1,6 @@
 require "rack"
 require "pup/dependencies/request_handler"
+require "pup/dependencies/method_override"
 
 module Pup
   class Application
@@ -12,6 +13,7 @@ module Pup
     end
 
     def call(env)
+      env = MethodOverride.apply_to(env)
       @request = Rack::Request.new(env)
 
       if router.has_routes?

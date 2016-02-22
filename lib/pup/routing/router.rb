@@ -5,12 +5,14 @@ module Pup
   module Routing
     class Router
       include RouteHelpers
-      attr_accessor :routes
+      attr_accessor :routes, :url_placeholders, :part_regex
 
       ALLOWED_VERBS = %w(get post put patch delete).freeze
 
       def initialize
         @routes = {}
+        @url_placeholders = {}
+        @part_regex = []
         generate_verb_methods
       end
 
@@ -23,7 +25,7 @@ module Pup
       end
 
       def get_match(verb, path)
-        verb = verb.downcase.to_sym
+        verb = verb.downcase
         routes[verb].detect do |route|
           route.check_path(path)
         end
@@ -40,37 +42,43 @@ module Pup
       end
 
       def process_and_store_route(verb, path, to)
-        regex_match, url_placeholders = extract_regex_and_placeholders(path)
-        path_regex = convert_path_to_regex(regex_match)
+        regex_parts, url_placeholders = extract_regex_and_placeholders(path)
+        path_regex = convert_regex_parts_to_path(regex_parts)
         route_object = Pup::Routing::Route.new(path_regex, to, url_placeholders)
 
-        routes[verb.downcase.to_sym] ||= []
-        routes[verb.downcase.to_sym] << route_object
+        routes[verb.downcase.freeze] ||= []
+        routes[verb.downcase] << route_object
       end
 
       def extract_regex_and_placeholders(path)
         path.sanitize_path!
 
-        regex_match = []
-        url_placeholders = {}
-        path.split("/").each_with_index do |element, index|
-          if element.start_with?(":")
-            url_placeholders[index] = element.delete(":").to_sym
-            regex_match << "[a-zA-Z0-9_]+"
-          else
-            regex_match << element
-          end
+        self.part_regex = []
+        self.url_placeholders = {}
+        path.split("/").each_with_index do |path_part, index|
+          store_part_and_placeholder(path_part, index)
         end
-        [regex_match, url_placeholders]
+
+        [part_regex, url_placeholders]
       end
 
-      def convert_path_to_regex(regex_match)
+      def store_part_and_placeholder(path_part, index)
+        if path_part.start_with?(":")
+          url_placeholders[index] = path_part.delete(":").freeze
+          part_regex << "[a-zA-Z0-9_]+"
+        else
+          part_regex << path_part
+        end
+      end
+
+      def convert_regex_parts_to_path(regex_match)
         regex_string = "^" + regex_match.join("/") + "/*$"
         Regexp.new(regex_string)
       end
 
       private :generate_verb_methods, :process_and_store_route,
-              :extract_regex_and_placeholders, :convert_path_to_regex
+              :extract_regex_and_placeholders, :convert_regex_parts_to_path,
+              :store_part_and_placeholder
     end
   end
 end

@@ -1,0 +1,13 @@
+.note-body {
+    width: 50em;
+    margin: auto;
+}
+
+.notelist-item {
+    padding: 0 5px 10px;
+    border-bottom: solid 1px #e7e7e7;
+}
+
+.notelist-item:hover{
+    background-color: #f1f1f1;
+}

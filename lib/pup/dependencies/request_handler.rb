@@ -22,8 +22,6 @@ module Pup
     def collage_parameters
       route_url_params = route.get_url_parameters(request.path_info)
       request.params.merge(route_url_params)
-    rescue RuntimeError
-      {}.merge(route_url_params)
     end
 
     def controller_response(controller, action)
