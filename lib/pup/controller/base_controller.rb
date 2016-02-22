@@ -21,7 +21,9 @@ module Pup
     end
 
     def get_template(view_name)
-      filename = File.join("app", "views", controller_name, "#{view_name}.erb")
+      filename = File.join(
+        APP_ROOT, "app", "views", controller_name, "#{view_name}.erb"
+      )
       File.read(filename)
     end
 

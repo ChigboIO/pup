@@ -23,7 +23,18 @@ module Pup
                 "(#{table_fields}) "\
                 "VALUES(#{values_placeholders})"
         DB.execute(query, table_values)
+
+        self.id = DB.execute("SELECT last_insert_rowid()")
       end
+      self.class.find(id)
+    end
+
+    def update(parameters)
+      parameters.each do |key, value|
+        send("#{key}=", value)
+      end
+
+      save
     end
 
     def destroy

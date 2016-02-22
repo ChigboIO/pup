@@ -9,28 +9,28 @@ module Pup
 
         constraints.each do |constraint_type, value|
           columns_definition += " "
-          columns_definition += send("#{constraint_type}_value", value)
+          columns_definition += send(constraint_type, value)
         end
         columns_definition += ","
       end
       columns_definition[0..-2]
     end
 
-    def type_value(value)
+    def type(value)
       value.to_s.upcase
     end
 
-    def primary_key_value(value)
+    def primary_key(value)
       return "PRIMARY KEY" if value
       ""
     end
 
-    def nullable_value(value)
+    def nullable(value)
       return "NOT NULL" unless value
       "NULL"
     end
 
-    def default_value(value)
+    def default(value)
       "DEFAULT `#{value}`"
     end
 

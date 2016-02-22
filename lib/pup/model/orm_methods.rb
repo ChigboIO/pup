@@ -5,6 +5,15 @@ module Pup
 
     DB ||= SQLite3::Database.new(File.join("db", "data.sqlite"))
 
+    def create(parameters)
+      model = new
+      parameters.each do |key, value|
+        model.send("#{key}=", value)
+      end
+
+      model.save
+    end
+
     def all
       fields = columns_array.join(", ")
       data = DB.execute("SELECT id, #{fields} FROM #{table_name}")
@@ -31,7 +40,7 @@ module Pup
         "SELECT id, #{fields} FROM #{table_name} WHERE id = ?",
         id
       ).first
-      row_to_model(row)
+      row_to_model(row) if row
     end
 
     def destroy(id)
