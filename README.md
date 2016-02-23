@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/andela-echigbo/pup.svg?branch=master)](https://travis-ci.org/andela-echigbo/pup) [![Coverage Status](https://coveralls.io/repos/github/andela-echigbo/pup/badge.svg?branch=master)](https://coveralls.io/github/andela-echigbo/pup?branch=master) [![Test Coverage](https://codeclimate.com/github/andela-echigbo/pup/badges/coverage.svg)](https://codeclimate.com/github/andela-echigbo/pup/coverage) [![Code Climate](https://codeclimate.com/github/andela-echigbo/pup/badges/gpa.svg)](https://codeclimate.com/github/andela-echigbo/pup)
 
 
-Pup is a micro framework target built on Ruby and Rack. The motive of building this framework was not to compete with Rails, but to create my own implemtnation of the MVC framework to help me and other programmers like me(that might want to read and/or contribute to this project) understand what actually happens behind the scene in rails and other awesome MVC frameworks.
+**Pup** is a micro framework target built on Ruby and Rack. The motive of building this framework was not to compete with Rails, but to create my own implemtnation of the MVC framework to help me and other programmers like me(that might want to read and/or contribute to this project) understand what actually happens behind the scene in rails and other awesome MVC frameworks.
 
 Pup is recommended for begginers who might want to work with a simpler framework, understand the besics of MVC framework and to build a non-complex application.
 
@@ -25,7 +25,7 @@ Or install it yourself as:
 
 ## Usage
 
-Creating a Pup application is very simple, however, a few things need to be setup and a few rules adhered to. Pup follows the same folder structure as a typical rails app with all of the `model`, `view` and `controller` code packed inside of an `app` folder, configuration based code and `routing` system placed inside a `config` folder and the main database file in a db folder. [Here](https://github.com/andela-echigbo/pup-notebook) is a link to a `Note Keeping` application app built using Pup with the correct folder setup, it can be forked, cloned and edited to suit other purposes.
+Creating a **Pup** application is very simple, however, a few things need to be setup and a few rules adhered to. Pup follows the same folder structure as a typical rails app with all of the `model`, `view` and `controller` code packed inside of an `app` folder, configuration based code and `routing` system placed inside a `config` folder and the main database file in a db folder. [Here](https://github.com/andela-echigbo/pup-notebook) is a link to a `Note Keeping` application app built using Pup with the correct folder setup, it can be forked, cloned and edited to suit other purposes.
 
 ### Setup
 
@@ -135,6 +135,17 @@ Example view file:
 ## Running the tests
 
 Test files are placed inside the spec folder including the unit tests and the integration tests. You can run the tests from your command line client by typing `rspec spec`
+
+## Limitation
+
+**Pup** is still in an evolving stage, but is targeted at being one of the most used micro framework for developing simple web application for the web. However, there is still a long way to go and we are calling on you to bring it closer to it's target. The following are yet to be implemented in Pup.
+
+* Migration - Managing your database status separately
+* Executables - Scripts that can perform operations in application _(start server, run migrations, etc)_
+* Supports for other templating engine
+* Support for other database managment systems
+* ...and more
+
 
 ## Development
 
