@@ -1,6 +1,6 @@
 # Pup
 
-[![Build Status](https://travis-ci.org/andela-echigbo/pup.svg?branch=master)](https://travis-ci.org/andela-echigbo/pup) [![Coverage Status](https://coveralls.io/repos/github/andela-echigbo/pup/badge.svg?branch=master)](https://coveralls.io/github/andela-echigbo/pup?branch=master) [![Test Coverage](https://codeclimate.com/github/andela-echigbo/pup/badges/coverage.svg)](https://codeclimate.com/github/andela-echigbo/pup/coverage) [![Code Climate](https://codeclimate.com/github/andela-echigbo/pup/badges/gpa.svg)](https://codeclimate.com/github/andela-echigbo/pup)
+[![Build Status](https://travis-ci.org/andela-echigbo/pup.svg?branch=master)](https://travis-ci.org/andela-echigbo/pup) [![Coverage Status](https://coveralls.io/repos/github/andela-echigbo/pup/badge.svg?branch=master)](https://coveralls.io/github/andela-echigbo/pup?branch=master) [![Code Climate](https://codeclimate.com/github/andela-echigbo/pup/badges/gpa.svg)](https://codeclimate.com/github/andela-echigbo/pup)
 
 
 **Pup** is a micro framework target built on Ruby and Rack. The motive of building this framework was not to compete with Rails, but to create my own implemtnation of the MVC framework to help me and other programmers like me(that might want to read and/or contribute to this project) understand what actually happens behind the scene in rails and other awesome MVC frameworks.
