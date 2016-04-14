@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/andela-echigbo/pup.svg?branch=master)](https://travis-ci.org/andela-echigbo/pup) [![Coverage Status](https://coveralls.io/repos/github/andela-echigbo/pup/badge.svg?branch=master)](https://coveralls.io/github/andela-echigbo/pup?branch=master) [![Code Climate](https://codeclimate.com/github/andela-echigbo/pup/badges/gpa.svg)](https://codeclimate.com/github/andela-echigbo/pup)
 
 
-**Pup** is a micro framework target built on Ruby and Rack. The motive of building this framework was not to compete with Rails, but to create my own implemtnation of the MVC framework to help me and other programmers like me(that might want to read and/or contribute to this project) understand what actually happens behind the scene in rails and other awesome MVC frameworks.
+**Pup** is a micro framework built with Ruby and Rack. The motive of building this framework is not to compete with Rails, but to create my own implementation of the MVC framework to help me and other programmers like me(that might want to read and/or contribute to this project) understand what actually happens behind the scene in rails and other awesome MVC frameworks.
 
 Pup is recommended for begginers who might want to work with a simpler framework, understand the besics of MVC framework and to build a non-complex application.
 
